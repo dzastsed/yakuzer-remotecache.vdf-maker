@@ -6,6 +6,8 @@ Based on https://github.com/zarroboogs/p4g-saveconv
 
 Collection of python script files for generating remotecache.vdf files for various yakuza games.
 
+Useful if you are importing converted saves/clear data from PS3/PS4 consoles, or from cracked installations of the game, no judging here.
+
 So far only Yakuza 0 and Yakuza Kiwami are supported. (will be updated later)
 
 
