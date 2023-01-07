@@ -21,3 +21,7 @@ USAGE
 4. Launch steam in offline mode and run your game, check if it detects your save data.
 5. If everything is correct, you can launch steam in online mode, and start the game again. If asked about save conflict, choose local saves.
 6. That's it, have fun playing!
+
+KNOWN ISSUES:
+
+Clear data does not get detected properly, will try to fix this somehow
