@@ -39,7 +39,29 @@ def write_remcache_file( vdf, filepath ):
     with open( filepath, "rb" ) as fs:
         fsha = sha1sum( fs ).hexdigest()
 
+    
     vdf_write( vdf, 1, filepath.name )
+    vdf_write( vdf, 2, "root", 0 )
+    vdf_write( vdf, 2, "size", fsize )
+    vdf_write( vdf, 2, "localtime", ftime+2 )
+    vdf_write( vdf, 2, "time", ftime )
+    vdf_write( vdf, 2, "remotetime", ftime )
+    vdf_write( vdf, 2, "sha", fsha )
+    vdf_write( vdf, 2, "syncstate", 4 )
+    vdf_write( vdf, 2, "persiststate", 0 )
+    vdf_write( vdf, 2, "platformstosync2", -1 )
+    vdf_write( vdf, 1 )
+
+def write_remcache_file2( vdf, filepath ): #hacky solution but hey it works lmao
+    fstat = os.stat( filepath )
+    fsize = fstat.st_size
+    ftime = math.floor( fstat.st_mtime )
+
+    with open( filepath, "rb" ) as fs:
+        fsha = sha1sum( fs ).hexdigest()
+
+    
+    vdf_write( vdf, 1, "save\system.sys" )
     vdf_write( vdf, 2, "root", 0 )
     vdf_write( vdf, 2, "size", fsize )
     vdf_write( vdf, 2, "localtime", ftime )
@@ -54,20 +76,17 @@ def write_remcache_file( vdf, filepath ):
 
 def write_remcache( remcache_path, data_path ):
     with open( remcache_path, "w", newline='\n' ) as vdf:
-        vdf_write( vdf, 0, "834530" )
+        vdf_write( vdf, 0, "1105510" )
         vdf_write( vdf, 1, "ChangeNumber", 0 ) 
         vdf_write( vdf, 1, "ostype", 16 )
 
-        for f in data_path.glob( "system.sys" ):
+        for f in data_path.glob( "save\system.sys" ):
+            write_remcache_file2( vdf, f )
+
+        for f in data_path.glob( "savegame*.clr" ):
             write_remcache_file( vdf, f )
 
-        for f in data_path.glob( "savedata0000.clr" ):
-            write_remcache_file( vdf, f )
-
-        for f in data_path.glob( "SaveData*.sav" ):
-            write_remcache_file( vdf, f )
-
-        for f in data_path.glob( "autosave*.sav" ):
+        for f in data_path.glob( "savegame*.sav" ):
             write_remcache_file( vdf, f )
     
 
@@ -84,7 +103,7 @@ def main():
     if not save_path.is_dir():
         raise Exception( "missing save dir or save dir doesn't exist" )
 
-    files = [ f for f in save_path.glob( "SaveData*.sav" ) if f.is_file() ]
+    files = [ f for f in save_path.glob( "savegame*.sav" ) if f.is_file() ]
     if len( files ) == 0:
         raise Exception( "input dir doesn't contain pc saves" )
 

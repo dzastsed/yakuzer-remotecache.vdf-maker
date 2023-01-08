@@ -39,12 +39,10 @@ def write_remcache_file( vdf, filepath ):
     with open( filepath, "rb" ) as fs:
         fsha = sha1sum( fs ).hexdigest()
 
-    #vdf_write( vdf, 1, "ChangeNumber", 0 )    im not a python god
-    #vdf_write( vdf, 1, "ostype", 16 )
     vdf_write( vdf, 1, filepath.name )
     vdf_write( vdf, 2, "root", 0 )
     vdf_write( vdf, 2, "size", fsize )
-    vdf_write( vdf, 2, "localtime", ftime )
+    vdf_write( vdf, 2, "localtime", ftime+2 ) #doesnt seem to help here
     vdf_write( vdf, 2, "time", ftime )
     vdf_write( vdf, 2, "remotetime", ftime )
     vdf_write( vdf, 2, "sha", fsha )
@@ -57,14 +55,16 @@ def write_remcache_file( vdf, filepath ):
 def write_remcache( remcache_path, data_path ):
     with open( remcache_path, "w", newline='\n' ) as vdf:
         vdf_write( vdf, 0, "638970" )
+        vdf_write( vdf, 1, "ChangeNumber", 0 ) 
+        vdf_write( vdf, 1, "ostype", 16 )
 
         for f in data_path.glob( "system.sys" ):
             write_remcache_file( vdf, f )
 
-        for f in data_path.glob( "savedata0000.clr" ):
+        for f in data_path.glob( "savedata*.clr" ):
             write_remcache_file( vdf, f )
 
-        for f in data_path.glob( "SaveData*.sav" ):
+        for f in data_path.glob( "savedata*.sav" ):
             write_remcache_file( vdf, f )
     
 
