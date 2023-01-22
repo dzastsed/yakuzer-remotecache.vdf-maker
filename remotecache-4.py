@@ -57,7 +57,7 @@ def write_remcache_file(vdf, filepath):
 
 def write_remcache( remcache_path, data_path ): 
     with open( remcache_path, "w", newline='\n' ) as vdf:
-        vdf_write( vdf, 0, "1105510" )
+        vdf_write( vdf, 0, "1105500" )
         vdf_write( vdf, 1, "ChangeNumber", 0 ) 
         vdf_write( vdf, 1, "ostype", 16 )
 
