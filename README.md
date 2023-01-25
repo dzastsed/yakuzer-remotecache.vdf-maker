@@ -8,7 +8,7 @@ Collection of python script files for generating remotecache.vdf files for vario
 
 Useful if you are importing converted saves/clear data from PS3/PS4 consoles, or from cracked installations of the game, no judging here.
 
-So far Yakuza 0, Kiwami and 3-5 are supported.
+So far Yakuza 0, Kiwami and 3-6 are supported.
 
 
 
